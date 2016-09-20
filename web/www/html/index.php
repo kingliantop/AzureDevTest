@@ -4,7 +4,7 @@
   </head>
   <body>
     <img src="image/Container-255x115.png" alt="Azure Container Service Logo" style="float:right"/>
-    <h1>Steven Lian Demo!Hello and welcome to the PHP Web application中国</h1>
+    <h1>Steven Demo!Hello and welcome to the PHP Web application中国</h1>
     <p>Host: <?php echo gethostname() ?></p>
     <?php
        // Sleep to make the script take enough time to fail the CI test.
