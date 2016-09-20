@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Deploy the application, with latest &quot;:stage&quot; container builds, on the Staging cluster.</description>
+  <logRotator class="hudson.tasks.LogRotator">
+    <daysToKeep>-1</daysToKeep>
+    <numToKeep>3</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.plugins.promoted__builds.PromotionTrigger plugin="promoted-builds@2.21">
+      <spec></spec>
+      <jobName>integration_test</jobName>
+      <process>Publish Containers</process>
+    </hudson.plugins.promoted__builds.PromotionTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>curl -X DELETE http://master0:8080/v2/groups/azure?force=true
+sleep 30
+rm -f marathon.json
+wget https://raw.githubusercontent.com/kingliantop/AzureDevTestDeploy/master/marathon/marathon.json
+curl -X POST http://master0:8080/v2/groups -d @marathon.json -H &quot;Content-type:application/json&quot;</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

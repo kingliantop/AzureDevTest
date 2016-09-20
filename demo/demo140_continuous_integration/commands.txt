@@ -1,0 +1,7 @@
+docker logs azuredevtestdeploy_load_test1
+docker-compose scale web=25
+docker-compose up -d
+docker logs azuredevtestdeploy_load_test1
+
+
+

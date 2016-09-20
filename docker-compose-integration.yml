@@ -1,0 +1,22 @@
+web:
+  build: web
+  ports:
+    - "80"
+  links:
+    - rest:rest-demo-azure.marathon.mesos
+  volumes:
+    - ./web/www:/var/www
+rest:
+  build: java
+  ports:
+    - "8080:8080"
+lb:
+  build: lb
+  ports:
+    - "80:80"
+  links:
+    - web:web
+integration_test:
+  build: integration_test
+  links:
+    - web

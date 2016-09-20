@@ -1,0 +1,28 @@
+* Backlog
+
+** TODO Break out each container into its own repo
+
+In order to better implement CI we need to break out each container
+into its own repo so that we can monitor and operate on them
+individually.
+
+** TODO Move all Docker commands to Docker Build Step plugin
+*** DONE Install docker plugins
+Installed:
+
+docker-plugin:0.15.0
+docker-build-step:1.32
+
+*** TODO Configure the docker plugins so they work properly
+
+Currently we don't use the Docker plugins for build/run/push steps.
+
+*** TODO Create build steps for each container
+
+
+*** TODO Can probably remove docker install steps from Dockerfile
+** TODO Use Docker in Docker to allow CI to be on the same VM as the dev environment
+** TODO Don't use host directory for data volume
+** TODO Optimize build file to improve build times
+*** TODO Consider moving the plugins download step to earlier in the build process
+

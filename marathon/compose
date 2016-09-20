@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: marathon-compose <marathon-endpoint> <group-definition-file-path>"
+  exit 1
+fi
+
+curl -X POST http://$1/v2/groups -d @$2 -H "Content-type: application/json"

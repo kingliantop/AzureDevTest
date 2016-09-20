@@ -1,0 +1,119 @@
+This notebook is used to track current goals and activities in the
+project. It is not an issue tracker (we use GitHub for that). It is a
+place to record current activity, successes and failures and near term
+plans. A lab notebook if you like.
+
+For best results edit in Emacs Org mode.
+
+* TODO Demo250 Push to Staging when tests pass
+
+This will be an extension of Demo140. The goal is to push updated
+images to DockerHub (tagged with "dev").
+
+** DONE Push container to Docker Hub
+
+*** DONE Create Docker Hub Organization called "ADTD"
+
+https://hub.docker.com/u/adtd/dashboard/teams/owners/
+
+
+
+
+*** DONE Manually push containers to the new org from the test machine
+
+  - [X] Create a repository for each of the containers
+    - [X] web
+    - [X] rest
+    - [X] integration_test
+    - [X] load_test
+  - [X] Manually push a "dev" tagged versio of each container
+    - [X] web
+    - [X] rest
+    - [X] integration_test
+    - [X] load_test
+
+
+
+
+
+*** DONE Add a push command to Jenkins when tests pass
+
+Used the promote build features.
+
+Basically the integration_test is promoted when the load_test passes
+(which itself is dependent on this integration_test passing).
+
+When promoted the containers are built and published.
+
+NOTE: in order for publication to work it is necessary to login to
+Docker Hub - see ci/jenkins/jenkins_home/jobs/*/nextBuildNumber - in
+order to login run the following command once the jenkins container is
+running.
+
+`docker exec ci_jenkins_1 docker login --email="foo@bar.org" --username="foo" --password="bar"`
+
+** DONE Publish app to Marathon from Docker Hub
+
+Use HTTP Request pluginz?
+
+Command to publish the app is:
+
+```
+curl -X POST http://master0:8080/v2/groups -d @marathon.json -H "Content-type: application/json"
+```
+
+To update the deployment use. Note that this will default to creating
+a deplyment if the group id does not already exist:
+
+```
+curl -X PUT http://master0:8080/v2/groups -d @marathon.json -H "Content-type: application/json"
+```
+
+To delete the deployment use:
+
+```
+curl -X DELETE http://master0:8080/v2/groups/azure?force=true
+```
+
+*** DONE make the PHP work
+
+Initially I thought DNS was not working, but that is not the case. It
+was a misconfigured Jenkins job.
+
+*** DONE update marathon.json to use adtd/*:stage
+
+** TODO Consider increasing timeout on docker deployment
+
+Deploying using Marathon can sometimes take a few attempts to work. It
+might be because it takes time to pull down the new images and the
+task times out.
+
+Possible settings to tweak:
+
+MESOS_EXECUTION-REGISTRATION_TIMEOUT
+MESOS_DOCKER_REMOVE_DELAY
+MESOS_GC_DELAY
+
+** TODO Use the Docker Publish plugin in CI
+
+** TODO Use Docker in Docker in CI
+
+** TODO make the demo work on three machine cluster
+
+Currently we can't scale web on a three machine cluster, presumably,
+because there are insufficient resources.
+
+* TODO Extract common items from docker-compose files
+
+* TODO Rename "java" to "rest"
+* TODO Remove the need for Marathon/Mesos DNS naming
+
+In order to work with Marathon/Mesos we have to use Mesos DNS which
+requires a Mesos/Marathon specific naming convention. This creates a
+dependency on Marathon/Mesos.
+
+Do what is necessary to revert changes in:
+
+$ git commit -m "Use mesos DNS naming"
+[master f70fbc6] Use mesos DNS naming
+ 2 files changed, 2 insertions(+), 2 deletions(-)

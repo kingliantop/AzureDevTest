@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.promoted__builds.PromotionProcess plugin="promoted-builds@2.21">
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <conditions>
+    <hudson.plugins.promoted__builds.conditions.DownstreamPassCondition>
+      <jobs>load_test, </jobs>
+      <evenIfUnstable>false</evenIfUnstable>
+    </hudson.plugins.promoted__builds.conditions.DownstreamPassCondition>
+  </conditions>
+  <icon>star-gold</icon>
+  <buildSteps>
+    <hudson.tasks.Shell>
+      <command>docker build -t adtd/web:stage web
+docker push adtd/web:stage
+docker build -t adtd/rest:stage java
+docker push adtd/rest:stage</command>
+    </hudson.tasks.Shell>
+  </buildSteps>
+</hudson.plugins.promoted__builds.PromotionProcess>

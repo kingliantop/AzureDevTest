@@ -1,0 +1,4 @@
+lynx localhost
+vi web/www/html/index.php
+docker build -t web web
+./script/dev.sh

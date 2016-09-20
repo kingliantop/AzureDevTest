@@ -1,0 +1,5 @@
+docker run hello-world
+docker run -d -p 80:80 tutum/hello-world
+lynx localhost
+docker stop $(docker ps -q)
+for i in {1..15}; do docker run -d -p 80 tutum/hello-world; done

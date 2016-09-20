@@ -1,0 +1,9 @@
+haproxy:
+  image: eeacms/haproxy
+  links:
+  - webapp
+  ports:
+  - "80:80"
+
+webapp:
+  image: eeacms/hello

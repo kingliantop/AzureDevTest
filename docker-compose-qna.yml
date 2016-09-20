@@ -1,0 +1,12 @@
+web_qna:
+  build: web_qna
+  ports:
+    - "80:80"
+  links:
+    - rest_qna:rest-demo-azure.marathon.mesos
+rest_qna:
+  build: rest_qna
+  ports:
+    - "8080:8080"
+
+

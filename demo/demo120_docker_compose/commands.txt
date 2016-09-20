@@ -1,0 +1,5 @@
+vi docker-compose.yml
+docker-compose up -d
+docker-compose stop
+docker-compose scale web=5
+docker-compose scale web=3
